@@ -41,12 +41,13 @@ public class Main {
 
          user.setAddresses(sets);
         long userId = (Long) session.save(user);
-
+        selectAddresses(session, 10, 30);
         session.getTransaction().commit();
 
 //        session.flush();
         session.close();
 
+        ;
         Thread.sleep(1000);
 
         curr = System.currentTimeMillis();
@@ -57,14 +58,14 @@ public class Main {
         session.getTransaction().commit();
         session.close();
         System.out.println(" ------------------------------------- Current time "+(System.currentTimeMillis() - curr));
-        selectAddresses(10, 30);
+
 
 
         sessionFactory.close();
     }
 
-    private static void selectAddresses(int from, int count){
-        Session session = getSessionFactory().openSession();
+    private static void selectAddresses(Session session,  int from, int count){
+
         Criteria criteria = session.createCriteria(Address.class);
         Criteria criteria1 = session.createCriteria(Address.class);
         List<Address> addresses = criteria.setFirstResult(from).setMaxResults(count).list();
