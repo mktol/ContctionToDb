@@ -1,8 +1,5 @@
 package com.example.entity;
 
-import org.hibernate.annotations.GenericGenerator;
-import org.hibernate.annotations.Parameter;
-
 import javax.persistence.*;
 
 @Entity
@@ -17,8 +14,8 @@ public class Address {
     @GenericGenerator(name = "gen", strategy = "foreign", parameters = { @Parameter(name = "property", value = "name") })*/
     private Long id;
 
-    @Column(name = "address_line1")
-    private String addressLine1;
+    @Column(name = "address")
+    private String address;
 
     @Column(name = "zipcode")
     private String zipcode;
@@ -28,20 +25,21 @@ public class Address {
 
     @ManyToOne(fetch=FetchType.LAZY)
     //    @PrimaryKeyJoinColumn
+    @JoinColumn (name = "user_id")
     private User user;
 
     public Address() {
     }
 
     public Address(String addressLine1, String zipcode, String city, User user) {
-        this.addressLine1 = addressLine1;
+        this.address = addressLine1;
         this.zipcode = zipcode;
         this.city = city;
         this.user = user;
     }
 
     public Address(String addres, String zipcode, String city) {
-        this.addressLine1 = addres;
+        this.address = addres;
         this.zipcode = zipcode;
         this.city = city;
     }
@@ -62,12 +60,12 @@ public class Address {
         this.id = id;
     }
 
-    public String getAddressLine1() {
-        return addressLine1;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAddressLine1(String addressLine1) {
-        this.addressLine1 = addressLine1;
+    public void setAddress(String addressLine1) {
+        this.address = addressLine1;
     }
 
     public String getZipcode() {
@@ -96,7 +94,10 @@ public class Address {
 
     @Override
     public String toString() {
-        return "AddressLine1= " + addressLine1 + ", City=" + city
-                + ", Zipcode=" + zipcode;
+        return "Address{" +
+                "addressLine1='" + address + '\'' +
+                ", zipcode='" + zipcode + '\'' +
+                ", city='" + city + '\'' +
+                '}';
     }
 }
